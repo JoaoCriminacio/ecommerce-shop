@@ -1,5 +1,6 @@
-import { Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import ProductLayout from "./cases/products/components/product-layout";
 
 function App() {
 
@@ -8,7 +9,8 @@ function App() {
 
       <main>
         <Routes>
-          
+          <Route path="/products" element={<ProductLayout />}>
+          </Route>
         </Routes>
       </main>
       
