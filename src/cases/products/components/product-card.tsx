@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { ProductDTO } from "../dtos/product.dto";
-import { useCart } from "../hooks/use-cart";
+import { useCart } from "@/cases/cart/context/cart-context";
 
 interface ProductCardProps {
   product: ProductDTO;
