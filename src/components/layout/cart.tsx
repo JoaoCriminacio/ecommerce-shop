@@ -5,7 +5,6 @@ import { toast } from "react-toastify";
 
 export function Cart() {
   const { cart, removeFromCart, clearCart } = useCart();
-
   const total = cart.reduce((sum, p) => sum + Number(p.price), 0);
 
   return (
