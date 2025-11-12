@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { toast } from 'react-toastify';
-import { supabase } from '@/lib/supabaseClient';
+import { supabase } from '@/lib/supabase-client';
 
 export function Login() {
     const [email, setEmail] = useState('');

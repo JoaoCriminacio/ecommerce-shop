@@ -8,8 +8,8 @@ import { Card, CardContent, CardHeader, CardDescription, CardTitle, CardFooter }
 import { useCreateCustomer } from "@/cases/customers/hooks/use-customer";
 import { useCities } from "@/cases/cities/hooks/use-city";
 import { useStates } from "@/cases/states/hooks/use-state";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { supabase } from "@/lib/supabaseClient";
+import { supabase } from "@/lib/supabase-client";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function Register() {
   const navigate = useNavigate();
