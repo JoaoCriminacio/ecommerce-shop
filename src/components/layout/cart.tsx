@@ -1,9 +1,9 @@
-import { useCart } from "@/cases/cart/context/cart-context";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
+import { useCart } from "@/context/cart-context";
 import { toast } from "react-toastify";
 
-export default function CartLayout() {
+export function Cart() {
   const { cart, removeFromCart, clearCart } = useCart();
 
   const total = cart.reduce((sum, p) => sum + Number(p.price), 0);

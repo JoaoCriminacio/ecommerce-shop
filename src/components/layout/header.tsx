@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/cases/cart/context/cart-context";
+import { useCart } from "@/context/cart-context";
 
 export function Header() {
   const { cart } = useCart();

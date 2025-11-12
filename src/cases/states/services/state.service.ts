@@ -1,16 +1,16 @@
 import { api } from "../../../lib/axios";
-import type { CategoryDTO } from "../dtos/category.dto";
+import type { StateDTO } from "../dtos/state.dto";
 
-const _ENDPOINT = "/categories";
+const _ENDPOINT = "/states";
 
-export const CategoryService = {
+export const StateService = {
 
-    async list(): Promise<CategoryDTO[]> {
+    async list(): Promise<StateDTO[]> {
         const result = await api.get(_ENDPOINT);
         return result.data;
     },
 
-    async getById(id: string): Promise<CategoryDTO> {
+    async getById(id: string): Promise<StateDTO> {
         const result = await api.get(`${_ENDPOINT}/${id}`);
         return result.data;
     }
