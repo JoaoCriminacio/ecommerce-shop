@@ -1,13 +1,28 @@
 import { Link, useNavigate } from "react-router-dom";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/cart-context";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuIndicator,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuViewport,
+} from "@/components/ui/navigation-menu"
 
 export function Header() {
   const { cart } = useCart();
   const navigate = useNavigate();
 
   const totalItems = cart.length;
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
 
   return (
     <header className="w-full bg-white border-b shadow-sm sticky top-0 z-50">
@@ -16,20 +31,42 @@ export function Header() {
           Ecommerce Shop
         </Link>
 
-        <Button variant="outline"
-                className="relative flex items-center gap-2 cursor-pointer"
-                onClick={() => navigate("/cart")}>
-          <ShoppingCart className="w-5 h-5" />
-          <span>Carrinho</span>
+        <div className="flex flex-row gap-10">
+          <Button variant="outline"
+                  className="relative flex items-center gap-2 cursor-pointer"
+                  onClick={() => navigate("/cart")}>
+                    <ShoppingCart className="w-5 h-5" />
+                    <span>Carrinho</span>
 
-          {
-            totalItems > 0 && (
-                <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
-                    {totalItems}
-                </span>
-            )
-          }
-        </Button>
+                    {
+                      totalItems > 0 && (
+                          <span className="absolute -top-2 -right-2 bg-green-600 text-white text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
+                              {totalItems}
+                          </span>
+                      )
+                    }
+          </Button>
+
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger className="flex items-center gap-2 px-3 py-2">
+                  <User className="w-6 h-6" />
+                </NavigationMenuTrigger>
+
+                <NavigationMenuContent  className="p-2 w-32">
+                  <NavigationMenuLink asChild>
+                    <Button variant="ghost"
+                            className="w-full justify-start text-left"
+                            onClick={handleLogout}>
+                      Sair
+                    </Button>
+                  </NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
       </div>
     </header>
   );
