@@ -27,8 +27,8 @@ export function Cart() {
       setIsProcessing(true);
 
       const stored = localStorage.getItem("user");
-      const { user } = JSON.parse(stored!);
-      const customer = customers?.find((c) => c.userId === user);
+      const { id } = JSON.parse(stored!);
+      const customer = customers?.find((c) => c.userId === id);
 
       const newOrder = await createOrder.mutateAsync({
         shipping: 0,
