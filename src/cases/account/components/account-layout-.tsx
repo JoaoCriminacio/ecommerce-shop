@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useEffect, useState } from "react";
 
 export function AccountLayout() {
-    const { data: customers, isLoading: customersLoading, } = useCustomers();
+    const { data: customers, isLoading: customersLoading } = useCustomers();
     const { data: cities = [], isLoading: citiesLoading } = useCities();
     const { data: states = [], isLoading: statesLoading } = useStates();
     const { mutate: updateCustomer, isPending } = useUpdateCustomer();
@@ -25,22 +25,44 @@ export function AccountLayout() {
         cityId: "",
     });
 
+    const [initialized, setInitialized] = useState(false);
+
+    const getCustomerCityId = (cust: any) => {
+        if (!cust) return undefined;
+        const c = cust.city;
+        if (!c) return undefined;
+        return typeof c === "string" ? c : c?.id;
+    };
+
     useEffect(() => {
-        const allReady = !customersLoading && !citiesLoading && !statesLoading && customer;
-        if (!allReady) return;
+        const ready =
+        !customersLoading && !citiesLoading && !statesLoading && !!customer && cities.length > 0 && states.length > 0;
 
-        const city = customer.city;
-        const state = city.state;
-
-        if (city && state) {
-            setFormData({
-                address: customer.address || "",
-                zipcode: customer.zipcode || "",
-                stateId: String(state.id),
-                cityId: String(city.id),
-            });
+        if (!ready) {
+            setInitialized(false);
+            return;
         }
-    }, [customer, cities, states, customersLoading, citiesLoading, statesLoading]);
+
+        if (initialized) return;
+
+        const customerCityId = getCustomerCityId(customer);
+        const city = cities.find((c) => String(c.id) === String(customerCityId));
+        const stateIdFromCity = city?.state?.id ? String(city.state.id) : undefined;
+
+        const stateIdFromCustomer = (typeof customer.city !== "string" && customer.city?.state?.id) ? String(customer.city.state.id) : undefined;
+        const stateId = stateIdFromCity ?? stateIdFromCustomer ?? "";
+
+        setFormData({
+            address: customer.address ?? "",
+            zipcode: customer.zipcode ?? "",
+            stateId,
+            cityId: city ? String(city.id) : String(customerCityId ?? ""),
+        });
+
+        setInitialized(true);
+    }, [customersLoading, citiesLoading, statesLoading, customer, cities, states]);
+
+    const filteredCities = formData.stateId ? cities.filter((c) => String(c.state.id) === String(formData.stateId)) : [];
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -51,8 +73,10 @@ export function AccountLayout() {
         e.preventDefault();
         if (!customer) return;
 
-        const selectedCity = cities.find((c) => c.id === formData.cityId);
-        if (!selectedCity) return;
+        const selectedCity = cities.find((c) => String(c.id) === String(formData.cityId));
+        if (!selectedCity) {
+            return;
+        }
 
         updateCustomer({
             id: customer.id!,
@@ -64,6 +88,14 @@ export function AccountLayout() {
             },
         });
     };
+
+    if (!initialized) {
+        return (
+        <div className="p-8">
+            <p>Carregando dados do usuário...</p>
+        </div>
+        );
+    }
 
     return (
         <div className="p-8">
@@ -79,20 +111,12 @@ export function AccountLayout() {
                           className="grid grid-cols-1 md:grid-cols-5 gap-4 justify-between items-end">
                         <div className="grid gap-2">
                             <Label htmlFor="address">Endereço</Label>
-                            <Input id="address"
-                                   name="address"
-                                   value={formData.address}
-                                   onChange={handleChange}
-                                   required/>
+                            <Input id="address" name="address" value={formData.address} onChange={handleChange} required />
                         </div>
 
                         <div className="grid gap-2">
                             <Label htmlFor="zipcode">CEP</Label>
-                            <Input id="zipcode"
-                                   name="zipcode"
-                                   value={formData.zipcode}
-                                   onChange={handleChange}
-                                   required/>
+                            <Input id="zipcode" name="zipcode" value={formData.zipcode} onChange={handleChange} required />
                         </div>
 
                         <div className="flex gap-4">
@@ -101,9 +125,9 @@ export function AccountLayout() {
                                 <Select value={formData.stateId}
                                         onValueChange={(value) =>
                                             setFormData((prev) => ({
-                                            ...prev,
-                                            stateId: value,
-                                            cityId: "",
+                                                ...prev,
+                                                stateId: value,
+                                                cityId: "",
                                             }))
                                         }>
                                     <SelectTrigger>
@@ -111,17 +135,11 @@ export function AccountLayout() {
                                     </SelectTrigger>
 
                                     <SelectContent>
-                                        {states.length > 0 ? (
-                                            states.map((state) => (
-                                                <SelectItem key={state.id} value={String(state.id)}>
-                                                    {state.name} ({state.acronym})
-                                                </SelectItem>
-                                            ))
-                                        ) : (
-                                            <SelectItem value="no-data" disabled>
-                                                Nenhum estado encontrado
+                                        {states.map((state) => (
+                                            <SelectItem key={state.id} value={String(state.id)}>
+                                                {state.name} ({state.acronym})
                                             </SelectItem>
-                                        )}
+                                        ))}
                                     </SelectContent>
                                 </Select>
                             </div>
@@ -129,17 +147,15 @@ export function AccountLayout() {
                             <div className="grid gap-2">
                                 <Label htmlFor="cityId">Cidade</Label>
                                 <Select value={formData.cityId}
-                                        onValueChange={(value) =>
-                                            setFormData((prev) => ({ ...prev, cityId: value }))
-                                        }
+                                        onValueChange={(value) => setFormData((prev) => ({ ...prev, cityId: value }))}
                                         disabled={!formData.stateId}>
                                     <SelectTrigger>
                                         <SelectValue placeholder="Selecione uma cidade..." />
                                     </SelectTrigger>
 
                                     <SelectContent>
-                                        {cities.length > 0 ? (
-                                            cities.map((city) => (
+                                        {filteredCities.length > 0 ? (
+                                            filteredCities.map((city) => (
                                                 <SelectItem key={city.id} value={String(city.id)}>
                                                     {city.name}
                                                 </SelectItem>
