@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ShoppingCart, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useCart } from "@/context/cart-context";
+import { useCart } from "@/cases/cart/context/cart-context";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -12,13 +12,14 @@ import {
 } from "@/components/ui/navigation-menu"
 
 export function Header() {
-  const { cart } = useCart();
+  const { cart, clearCart } = useCart();
   const navigate = useNavigate();
 
   const totalItems = cart.length;
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    clearCart();
     navigate("/login");
   };
 

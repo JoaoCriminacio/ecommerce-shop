@@ -1,11 +1,21 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { useCart } from "@/context/cart-context";
+import { useCart } from "../context/cart-context";
 import { toast } from "react-toastify";
 
 export function Cart() {
-  const { cart, removeFromCart, clearCart } = useCart();
-  const total = cart.reduce((sum, p) => sum + Number(p.price), 0);
+  const { cart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
+  const total = cart.reduce((sum, p) => sum + Number(p.price) * p.quantity, 0);
+
+  const handleClearCart = () => {
+    clearCart();
+    toast.info("Carrinho limpo com sucesso!");
+  }
+
+  const handleFinishOrder = () => {
+    clearCart();
+    toast.success("Compra finalizada com sucesso!");
+  };
 
   return (
     <div className="p-8">
@@ -28,17 +38,43 @@ export function Cart() {
                                         <h2 className="text-lg font-semibold">{product.name}</h2>
                                     </CardHeader>
 
-                                    <CardContent>
+                                    <CardContent className="flex flex-col justify-between h-full">
                                         {
                                             product.description ? 
-                                                (<p className="text-sm text-gray-600 mb-2">{product.description}</p>) 
+                                                (<p className="text-sm text-gray-600 mb-2 whitespace-pre-line wrap-break-words">{product.description}</p>) 
                                             : 
-                                                (<div className="mb-6" />)
+                                                (<div className="h-full" />)
                                         }
 
-                                        <span className="font-bold text-lg text-green-600">
-                                            R$ {product.price}
-                                        </span>
+                                        <div className="flex items-center justify-between mt-2">
+                                            <span className="font-bold text-green-600 text-lg">
+                                                R$ {Number(product.price).toFixed(2)}
+                                            </span>
+                                        </div>
+
+                                        <div className="flex items-center justify-center gap-3 mt-4">
+                                            <Button variant="outline"
+                                                    size="sm"
+                                                    onClick={() => decreaseQuantity(product.id!)}
+                                                    disabled={product.quantity <= 1}>
+                                                –
+                                            </Button>
+
+                                            <span className="font-medium">{product.quantity}</span>
+
+                                            <Button variant="outline"
+                                                    size="sm"
+                                                    onClick={() => increaseQuantity(product.id!)}>
+                                                +
+                                            </Button>
+                                        </div>
+
+                                        <p className="mt-4 text-center text-gray-500 text-sm">
+                                            Subtotal:{" "}
+                                            <span className="font-semibold text-green-600">
+                                                R$ {(Number(product.price) * product.quantity).toFixed(2)}
+                                            </span>
+                                        </p>
                                     </CardContent>
 
                                     <CardFooter className="mt-auto">
@@ -63,13 +99,11 @@ export function Cart() {
                         <div className="flex gap-3">
                             <Button variant="secondary"
                                     className="cursor-pointer"
-                                    onClick={() => {
-                                    clearCart();
-                                    }}>
+                                    onClick={handleClearCart}>
                                 Limpar carrinho
                             </Button>
 
-                            <Button onClick={() => toast.success("Compra finalizada com sucesso!")}
+                            <Button onClick={handleFinishOrder}
                                     className="cursor-pointer">
                                 Finalizar compra
                             </Button>

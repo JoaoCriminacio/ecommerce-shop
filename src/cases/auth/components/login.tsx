@@ -35,7 +35,7 @@ export function Login() {
                 return;
             }
 
-            localStorage.setItem('token', data.session?.access_token || '');
+            localStorage.setItem('user', JSON.stringify({user: data.user?.id, token: data.session?.access_token}) || '');
             toast.success('Login realizado com sucesso!');
             navigate('/products');
         } catch (err) {

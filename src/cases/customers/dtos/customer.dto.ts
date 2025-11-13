@@ -6,4 +6,5 @@ export interface CustomerDTO {
     address: string;
     zipcode: string;
     city: CityDTO;
+    userId: string
 }

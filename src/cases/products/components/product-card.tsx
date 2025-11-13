@@ -1,7 +1,7 @@
 import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { ProductDTO } from "../dtos/product.dto";
-import { useCart } from "@/context/cart-context";
+import { useCart } from "@/cases/cart/context/cart-context";
 
 interface ProductCardProps {
   product: ProductDTO;
@@ -38,7 +38,7 @@ export function ProductCard({ product }: ProductCardProps) {
       </div>
 
       <CardFooter className="mt-auto">
-        <Button className="w-full cursor-pointer" onClick={() => addToCart(product)}>
+        <Button className="w-full cursor-pointer" onClick={() => addToCart({...product, quantity: 1})}>
           Adicionar ao carrinho
         </Button>
       </CardFooter>

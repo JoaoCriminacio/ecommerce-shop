@@ -10,6 +10,7 @@ import { useCities } from "@/cases/cities/hooks/use-city";
 import { useStates } from "@/cases/states/hooks/use-state";
 import { supabase } from "@/lib/supabase-client";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import type { CustomerDTO } from "@/cases/customers/dtos/customer.dto";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -53,9 +54,6 @@ export default function Register() {
       });
 
       if (signUpError) throw signUpError;
-      const userId = signUpData.user?.id;
-      console.log(signUpData)
-      if (!userId) throw new Error("Erro ao criar usuário.");
 
       createCustomer.mutate(
         {
@@ -63,8 +61,8 @@ export default function Register() {
           address: formData.address,
           zipcode: formData.zipcode,
           city: selectedCity,
-          user_id: userId,
-        } as any,
+          userId: signUpData.user?.id,
+        } as CustomerDTO,
         {
           onSuccess: () => {
             toast.success("Cadastro realizado com sucesso!");
