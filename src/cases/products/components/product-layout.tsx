@@ -30,7 +30,7 @@ export default function ProductLayout() {
   return (
     <div className="p-8">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-        <h1 className="text-2xl font-bold mb-4">Catálogo de Produtos</h1>
+        <h1 className="text-2xl font-bold">Catálogo de Produtos</h1>
         
         <div className="flex flex-col sm:flex-row items-center gap-4">
             <InputGroup className="max-w-96 w-full sm:w-80">

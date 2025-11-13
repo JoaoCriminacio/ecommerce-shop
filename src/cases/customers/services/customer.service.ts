@@ -23,9 +23,5 @@ export const CustomerService = {
     async update(id: string, customer: CustomerDTO): Promise<CustomerDTO> {
         const result = await api.put(`${_ENDPOINT}/${id}`, customer);
         return result.data;
-    },
-
-    async delete(id: string): Promise<void> {
-        await api.delete(`${_ENDPOINT}/${id}`);
     }
 };

@@ -66,11 +66,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   function clearCart() {
-    if (cart.length === 0) {
-      toast.info("O carrinho já está vazio!");
-      return;
-    }
-
     setCart([]);
   }
 

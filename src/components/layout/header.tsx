@@ -26,11 +26,11 @@ export function Header() {
   return (
     <header className="w-full bg-white border-b shadow-sm sticky top-0 z-50">
       <div className="flex items-center justify-between px-6 py-4">
-        <Link to="/products" className="text-xl font-bold text-gray-800 hover:text-green-600 transition-colors">
+        <Link to="/products" className="text-xl font-bold text-gray-800 hover:text-blue-600 transition-colors ml-12">
           Ecommerce Shop
         </Link>
 
-        <div className="flex flex-row gap-10">
+        <div className="flex flex-row gap-10 mr-12">
           <Button variant="outline"
                   className="relative flex items-center gap-2 cursor-pointer"
                   onClick={() => navigate("/cart")}>
@@ -54,6 +54,14 @@ export function Header() {
                 </NavigationMenuTrigger>
 
                 <NavigationMenuContent  className="p-2 w-32">
+                  <NavigationMenuLink asChild>
+                    <Button variant="ghost"
+                            className="w-full justify-start text-left"
+                            onClick={() => navigate('/account')}>
+                      Conta
+                    </Button>
+                  </NavigationMenuLink>
+                  
                   <NavigationMenuLink asChild>
                     <Button variant="ghost"
                             className="w-full justify-start text-left"
