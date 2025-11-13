@@ -3,10 +3,11 @@ import type { OrderItemDTO } from "./order-item.dto";
 
 export interface OrderDTO {
     id?: string;
-    custormer: CustomerDTO;
+    customer: CustomerDTO | string;
     status: string;
     total: number;
-    items: OrderItemDTO[];
-    createdAt: Date;
-    updatedAt: Date;
+    shipping: number;
+    items?: OrderItemDTO[];
+    createdAt?: Date;
+    updatedAt?: Date;
 }

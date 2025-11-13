@@ -2,19 +2,60 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useCart } from "../context/cart-context";
 import { toast } from "react-toastify";
+import { useCustomers } from "@/cases/customers/hooks/use-customer";
+import { useCreateOrder } from "@/cases/orders/hooks/use-order";
+import { useCreateOrderItem } from "@/cases/orders/hooks/use-order-item";
+import { useState } from "react";
 
 export function Cart() {
   const { cart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
   const total = cart.reduce((sum, p) => sum + Number(p.price) * p.quantity, 0);
 
-  const handleClearCart = () => {
+  const { data: customers } = useCustomers();
+  const createOrder = useCreateOrder();
+  const createOrderItem = useCreateOrderItem();
+
+  const [isProcessing, setIsProcessing] = useState(false);
+
+  const handleClearCart = async () => {
     clearCart();
     toast.info("Carrinho limpo com sucesso!");
   }
 
-  const handleFinishOrder = () => {
-    clearCart();
-    toast.success("Compra finalizada com sucesso!");
+  const handleFinishOrder = async () => {
+    try {
+      setIsProcessing(true);
+
+      const stored = localStorage.getItem("user");
+      const { user } = JSON.parse(stored!);
+      const customer = customers?.find((c) => c.userId === user);
+
+      const newOrder = await createOrder.mutateAsync({
+        shipping: 0,
+        status: "NEW",
+        total,
+        customer: customer!.id!,
+      });
+
+      await Promise.all(
+        cart.map((p) =>
+          createOrderItem.mutateAsync({
+            quantity: p.quantity,
+            value: Number(p.price),
+            order: newOrder.id!,
+            product: p.id!,
+          })
+        )
+      );
+
+      toast.success("Compra finalizada com sucesso!");
+      clearCart();
+    } catch (error) {
+      console.error(error);
+      toast.error("Erro ao finalizar o pedido.");
+    } finally {
+      setIsProcessing(false);
+    }
   };
 
   return (
@@ -99,13 +140,15 @@ export function Cart() {
                         <div className="flex gap-3">
                             <Button variant="secondary"
                                     className="cursor-pointer"
-                                    onClick={handleClearCart}>
+                                    onClick={handleClearCart}
+                                    disabled={isProcessing}>
                                 Limpar carrinho
                             </Button>
 
                             <Button onClick={handleFinishOrder}
-                                    className="cursor-pointer">
-                                Finalizar compra
+                                    className="cursor-pointer"
+                                    disabled={isProcessing}>
+                                {isProcessing ? "Processando..." : "Finalizar compra"}
                             </Button>
                         </div>
                     </div>
