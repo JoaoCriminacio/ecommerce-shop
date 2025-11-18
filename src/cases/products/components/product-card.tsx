@@ -36,7 +36,7 @@ export function ProductCard({ product }: ProductCardProps) {
                               toggle={(productId) => toggle.mutate(productId)}/>
           </div>
 
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-2">
               <AverageStars rating={average} />
               <span className="text-xs text-gray-500">
                 {reviews?.length ?? 0} {reviews?.length === 1 ? 'avaliação' : 'avaliações'}
@@ -53,7 +53,7 @@ export function ProductCard({ product }: ProductCardProps) {
           }
 
           <div className="flex flex-col">
-            <span className="font-bold text-lg text-green-600">
+            <span className="font-bold text-lg text-green-600 mb-2">
               R$ {product.price}
             </span>
 
