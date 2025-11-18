@@ -35,8 +35,7 @@ export function AccountLayout() {
     };
 
     useEffect(() => {
-        const ready =
-        !customersLoading && !citiesLoading && !statesLoading && !!customer && cities.length > 0 && states.length > 0;
+        const ready = !customersLoading && !citiesLoading && !statesLoading && !!customer && cities.length > 0 && states.length > 0;
 
         if (!ready) {
             setInitialized(false);
@@ -108,69 +107,67 @@ export function AccountLayout() {
                     <h2 className="text-xl font-semibold mb-8">Endereço</h2>
 
                     <form onSubmit={handleSubmit}
-                          className="grid grid-cols-1 md:grid-cols-5 gap-4 justify-between items-end">
-                        <div className="grid gap-2">
+                          className="grid grid-cols-1 md:grid-cols-5 gap-6">
+                        <div className="col-span-1 flex flex-col gap-2">
                             <Label htmlFor="address">Endereço</Label>
                             <Input id="address" name="address" value={formData.address} onChange={handleChange} required />
                         </div>
 
-                        <div className="grid gap-2">
+                        <div className="col-span-1 flex flex-col gap-2">
                             <Label htmlFor="zipcode">CEP</Label>
                             <Input id="zipcode" name="zipcode" value={formData.zipcode} onChange={handleChange} required />
                         </div>
 
-                        <div className="flex gap-4">
-                            <div className="grid gap-2">
-                                <Label htmlFor="stateId">Estado</Label>
-                                <Select value={formData.stateId}
-                                        onValueChange={(value) =>
-                                            setFormData((prev) => ({
-                                                ...prev,
-                                                stateId: value,
-                                                cityId: "",
-                                            }))
-                                        }>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Selecione um estado..." />
-                                    </SelectTrigger>
+                        <div className="col-span-1 flex flex-col gap-2 md:justify-self-center">
+                            <Label htmlFor="stateId">Estado</Label>
+                            <Select value={formData.stateId}
+                                    onValueChange={(value) =>
+                                        setFormData((prev) => ({
+                                            ...prev,
+                                            stateId: value,
+                                            cityId: "",
+                                        }))
+                                    }>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Selecione um estado..." />
+                                </SelectTrigger>
 
-                                    <SelectContent>
-                                        {states.map((state) => (
-                                            <SelectItem key={state.id} value={String(state.id)}>
-                                                {state.name} ({state.acronym})
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-
-                            <div className="grid gap-2">
-                                <Label htmlFor="cityId">Cidade</Label>
-                                <Select value={formData.cityId}
-                                        onValueChange={(value) => setFormData((prev) => ({ ...prev, cityId: value }))}
-                                        disabled={!formData.stateId}>
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Selecione uma cidade..." />
-                                    </SelectTrigger>
-
-                                    <SelectContent>
-                                        {filteredCities.length > 0 ? (
-                                            filteredCities.map((city) => (
-                                                <SelectItem key={city.id} value={String(city.id)}>
-                                                    {city.name}
-                                                </SelectItem>
-                                            ))
-                                        ) : (
-                                            <SelectItem value="no-data" disabled>
-                                                Nenhuma cidade disponível
-                                            </SelectItem>
-                                        )}
-                                    </SelectContent>
-                                </Select>
-                            </div>
+                                <SelectContent>
+                                    {states.map((state) => (
+                                        <SelectItem key={state.id} value={String(state.id)}>
+                                            {state.name} ({state.acronym})
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         </div>
 
-                        <div className="flex sm:ml-8">
+                        <div className="col-span-1 flex flex-col gap-2">
+                            <Label htmlFor="cityId">Cidade</Label>
+                            <Select value={formData.cityId}
+                                    onValueChange={(value) => setFormData((prev) => ({ ...prev, cityId: value }))}
+                                    disabled={!formData.stateId}>
+                                <SelectTrigger>
+                                    <SelectValue placeholder="Selecione uma cidade..." />
+                                </SelectTrigger>
+
+                                <SelectContent>
+                                    {filteredCities.length > 0 ? (
+                                        filteredCities.map((city) => (
+                                            <SelectItem key={city.id} value={String(city.id)}>
+                                                {city.name}
+                                            </SelectItem>
+                                        ))
+                                    ) : (
+                                        <SelectItem value="no-data" disabled>
+                                            Nenhuma cidade disponível
+                                        </SelectItem>
+                                    )}
+                                </SelectContent>
+                            </Select>
+                        </div>
+
+                        <div className="flex self-end">
                             <Button className="cursor-pointer" type="submit" disabled={isPending}>
                                 {isPending ? "Salvando..." : "Salvar alterações"}
                             </Button>
