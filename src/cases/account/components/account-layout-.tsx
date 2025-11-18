@@ -1,5 +1,5 @@
 import { useCities } from "@/cases/cities/hooks/use-city";
-import { useCustomers, useUpdateCustomer } from "@/cases/customers/hooks/use-customer";
+import { useCurrentCustomer, useUpdateCustomer } from "@/cases/customers/hooks/use-customer";
 import { OrderDataTable } from "@/cases/orders/components/data-table/order-data-table";
 import { useStates } from "@/cases/states/hooks/use-state";
 import { Button } from "@/components/ui/button";
@@ -9,14 +9,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useEffect, useState } from "react";
 
 export function AccountLayout() {
-    const { data: customers, isLoading: customersLoading } = useCustomers();
+    const { customer, isLoading: customersLoading } = useCurrentCustomer();
     const { data: cities = [], isLoading: citiesLoading } = useCities();
     const { data: states = [], isLoading: statesLoading } = useStates();
     const { mutate: updateCustomer, isPending } = useUpdateCustomer();
-
-    const user = JSON.parse(localStorage.getItem("user") || "{}");
-    const userId = user?.id;
-    const customer = customers?.find((customer) => customer.userId === userId);
 
     const [formData, setFormData] = useState({
         address: "",

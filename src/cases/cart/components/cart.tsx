@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { useCart } from "../context/cart-context";
 import { toast } from "react-toastify";
-import { useCustomers } from "@/cases/customers/hooks/use-customer";
+import { useCurrentCustomer } from "@/cases/customers/hooks/use-customer";
 import { useCreateOrder } from "@/cases/orders/hooks/use-order";
 import { useCreateOrderItem } from "@/cases/orders/hooks/use-order-item";
 import { useState } from "react";
@@ -11,7 +11,7 @@ export function Cart() {
   const { cart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
   const total = cart.reduce((sum, p) => sum + Number(p.price) * p.quantity, 0);
 
-  const { data: customers } = useCustomers();
+  const { customer } = useCurrentCustomer();
   const createOrder = useCreateOrder();
   const createOrderItem = useCreateOrderItem();
 
@@ -25,10 +25,6 @@ export function Cart() {
   const handleFinishOrder = async () => {
     try {
       setIsProcessing(true);
-
-      const stored = localStorage.getItem("user");
-      const { id } = JSON.parse(stored!);
-      const customer = customers?.find((c) => c.userId === id);
 
       const newOrder = await createOrder.mutateAsync({
         shipping: 0,

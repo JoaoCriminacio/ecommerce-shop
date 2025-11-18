@@ -61,6 +61,14 @@ export function Header() {
                       Conta
                     </Button>
                   </NavigationMenuLink>
+
+                  <NavigationMenuLink asChild>
+                    <Button variant="ghost"
+                            className="w-full justify-start text-left"
+                            onClick={() => navigate('/favorites')}>
+                      Favoritos
+                    </Button>
+                  </NavigationMenuLink>
                   
                   <NavigationMenuLink asChild>
                     <Button variant="ghost"

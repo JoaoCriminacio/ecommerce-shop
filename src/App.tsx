@@ -9,6 +9,7 @@ import { Cart } from "./cases/cart/components/cart";
 import { PublicRoute } from "./cases/auth/guards/public-route";
 import { ProtectedRoute } from "./cases/auth/guards/protected-route";
 import { AccountLayout } from "./cases/account/components/account-layout-";
+import { FavoriteLayout } from "./cases/favorites/components/favorite-layout";
 
 function App() {
   const location = useLocation();
@@ -49,6 +50,12 @@ function App() {
             <Route path="/account" element={
               <ProtectedRoute>
                 <AccountLayout />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/favorites" element={
+              <ProtectedRoute>
+                <FavoriteLayout />
               </ProtectedRoute>
             } />
 
