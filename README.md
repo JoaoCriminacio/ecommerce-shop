@@ -1,73 +1,65 @@
-# React + TypeScript + Vite
+<h1 align="center"> E-commerce Shop </h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📌 Sobre
 
-Currently, two official plugins are available:
+O E-commerce Shop é o trabalho final da disciplina de Programação, do Centro Universitário Mater Dei - UNIMATER, que seria basicamente uma loja virtual. A aplicação permite visualizar produtos, adicionar eles ao carrinho, aos favoritos, fazer avaliações, realizar pedidos e visualizar informações da sua conta.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🖥️ Telas
 
-## React Compiler
+### Login
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+#### Entrar
+<img width="1920" height="945" alt="image" src="https://github.com/user-attachments/assets/f36b6863-8ae2-48c9-84a0-70bfe0be33ff" />
 
-## Expanding the ESLint configuration
+#### Criar
+<img width="1920" height="945" alt="image" src="https://github.com/user-attachments/assets/90142768-4ec4-4221-893f-8f4f0b12ba46" />
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Produtos
+<img width="1920" height="945" alt="image" src="https://github.com/user-attachments/assets/3838a9c4-3bf4-4d79-91dc-662acf709470" />
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Carrinho
+<img width="1920" height="945" alt="image" src="https://github.com/user-attachments/assets/0ddc6975-173d-4fc4-a0e6-dad2b59387fc" />
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Conta
+<img width="1920" height="945" alt="image" src="https://github.com/user-attachments/assets/160f6274-6000-440b-b83e-cdd15cdfa25e" />
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Favoritos
+<img width="1920" height="945" alt="image" src="https://github.com/user-attachments/assets/9d5f3812-d41d-4d22-bc3f-6a35d960bad2" />
+
+## ⚙️ Variáveis de Ambiente
+
+Para rodar o projeto, é necessário configurar a url no arquivo ```.env```:
+```env
+VITE_API_URL=
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🗄️ Relacionamento com o Backend
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+O CMS consome a API REST do projeto [E-commerce Backend](https://github.com/JoaoCriminacio/ecommerce-backend), utilizando requisições HTTP para:
+- Listar, criar, editar e excluir entidades
+- Carregar produtos, categorias e marcas dinamicamente
+- Exibir pedidos em tempo real
+- Carregar dados de clientes
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠 Tecnologias
+
+<div align="center">
+  <table>
+    <tr>
+      <th>Vite</th>
+      <th>HTML</th>
+      <th>CSS</th>
+      <th>Tailwind</th>
+      <th>TypeScript</th>
+  	  <th>React</th>
+    </tr>
+    <tr>
+      <td align="center"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=vite" alt="Vite"></a></td>
+      <td align="center"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=html" alt="HTML"></a></td>
+      <td align="center"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=css" alt="CSS"></a></td>
+      <td align="center"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=tailwind" alt="Tailwind"></a></td>
+      <td align="center"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=typescript" alt="TypeScript"></a></td>
+  	  <td align="center"><a href="https://skillicons.dev"><img src="https://skillicons.dev/icons?i=react" alt="React"></a></td>
+    </tr>
+  </table>
+</div>
