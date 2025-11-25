@@ -8,11 +8,3 @@ export function useStates() {
         queryFn: StateService.list
     });
 }
-
-export function useState(id: string) {
-    return useQuery<StateDTO>({
-        queryKey: ["states", id],
-        queryFn: () => StateService.getById(id),
-        enabled: !!id
-    });
-}

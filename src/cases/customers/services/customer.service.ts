@@ -10,11 +10,6 @@ export const CustomerService = {
         return result.data;
     },
 
-    async getById(id: string): Promise<CustomerDTO> {
-        const result = await api.get(`${_ENDPOINT}/${id}`);
-        return result.data;
-    },
-
     async create(customer: CustomerDTO): Promise<CustomerDTO> {
         const result = await api.post(_ENDPOINT, customer);
         return result.data;

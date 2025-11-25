@@ -5,13 +5,6 @@ import { useCurrentCustomer } from "@/cases/customers/hooks/use-customer";
 import { useOrders } from "@/cases/orders/hooks/use-order";
 import { toast } from "react-toastify";
 
-export function useReviews() {
-    return useQuery<ReviewDTO[]>({
-        queryKey: ["reviews"],
-        queryFn: ReviewService.list
-    });
-}
-
 export function useProductReviews(productId: string) {
     return useQuery<ReviewDTO[]>({
         queryKey: ["reviews", productId],

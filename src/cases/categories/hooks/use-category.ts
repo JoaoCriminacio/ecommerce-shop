@@ -8,11 +8,3 @@ export function useCategories() {
         queryFn: CategoryService.list
     });
 }
-
-export function useCategory(id: string) {
-    return useQuery<CategoryDTO>({
-        queryKey: ["categories", id],
-        queryFn: () => CategoryService.getById(id),
-        enabled: !!id
-    });
-}

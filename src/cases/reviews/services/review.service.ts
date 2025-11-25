@@ -5,11 +5,6 @@ const _ENDPOINT = '/reviews';
 
 export const ReviewService = {
 
-    async list(): Promise<ReviewDTO[]> {
-        const result = await api.get(_ENDPOINT);
-        return result.data;
-    },
-
     async listByProduct(productId: string) {
         const result = await api.get(`${_ENDPOINT}?productId=${productId}`);
         return result.data;

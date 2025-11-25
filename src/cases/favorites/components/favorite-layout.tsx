@@ -3,7 +3,6 @@ import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/in
 import { Search } from "lucide-react";
 import { useState } from "react";
 
-
 export function FavoriteLayout() {
     const [searchTerm, setSearchTerm] = useState("");
 

@@ -8,11 +8,3 @@ export function useCities() {
         queryFn: CityService.list
     });
 }
-
-export function useCity(id: string) {
-    return useQuery<CityDTO>({
-        queryKey: ["cities", id],
-        queryFn: () => CityService.getById(id),
-        enabled: !!id
-    });
-}

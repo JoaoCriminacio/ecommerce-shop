@@ -9,13 +9,13 @@ import { useState } from "react";
 
 export function Cart() {
   const { cart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
-  const total = cart.reduce((sum, p) => sum + Number(p.price) * p.quantity, 0);
-
   const { customer } = useCurrentCustomer();
   const createOrder = useCreateOrder();
   const createOrderItem = useCreateOrderItem();
 
   const [isProcessing, setIsProcessing] = useState(false);
+
+  const total = cart.reduce((sum, p) => sum + Number(p.price) * p.quantity, 0);
 
   const handleClearCart = async () => {
     clearCart();

@@ -9,15 +9,7 @@ export function useCustomers() {
         queryKey: ["customers"],
         queryFn: CustomerService.list
     });
-}
-
-export function useCustomer(id: string) {
-    return useQuery<CustomerDTO>({
-        queryKey: ["customers", id],
-        queryFn: () => CustomerService.getById(id),
-        enabled: !!id
-    });
-}    
+} 
 
 export function useCreateCustomer() {
     return useMutation<CustomerDTO, Error, Omit<CustomerDTO, 'id'>>({
