@@ -5,7 +5,7 @@ import Register from "./cases/auth/components/register";
 import ProductLayout from "./cases/products/components/product-layout";
 import { Header } from "./components/layout/header";
 import { CartProvider } from "./cases/cart/context/cart-context";
-import { Cart } from "./cases/cart/components/cart";
+import { CartLayout } from "./cases/cart/components/cart-layout";
 import { PublicRoute } from "./cases/auth/guards/public-route";
 import { ProtectedRoute } from "./cases/auth/guards/protected-route";
 import { AccountLayout } from "./cases/account/components/account-layout-";
@@ -43,7 +43,7 @@ function App() {
 
             <Route path="/cart" element={
               <ProtectedRoute>
-                <Cart />
+                <CartLayout />
               </ProtectedRoute>
             } />
 

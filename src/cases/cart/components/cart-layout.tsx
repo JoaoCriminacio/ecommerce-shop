@@ -7,7 +7,7 @@ import { useCreateOrder } from "@/cases/orders/hooks/use-order";
 import { useCreateOrderItem } from "@/cases/orders/hooks/use-order-item";
 import { useState } from "react";
 
-export function Cart() {
+export function CartLayout() {
   const { cart, removeFromCart, clearCart, increaseQuantity, decreaseQuantity } = useCart();
   const { customer } = useCurrentCustomer();
   const createOrder = useCreateOrder();
@@ -55,7 +55,7 @@ export function Cart() {
   };
 
   return (
-    <div className="p-8">
+    <div className="p-8 h-full">
       <h1 className="text-2xl font-bold mb-6">Meu Carrinho</h1>
 
       {
@@ -66,7 +66,7 @@ export function Cart() {
         : 
             (
                 <>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6 max-h-[70vh] overflow-y-auto">
                         {
                             cart.map((product) => (
                                 <Card key={product.id} 
